@@ -10,8 +10,7 @@
     </releaseNotes>
     <summary>The default i/o implementation for Latipium</summary>
     <language>en-US</language>
-    <projectUrl>
-    </projectUrl>
+    <projectUrl>https://github.com/latipium/default-io</projectUrl>
     <iconUrl>https://latipium.com/favicon.ico</iconUrl>
     <licenseUrl>https://github.com/latipium/default-io/blob/master/LICENSE</licenseUrl>
     <copyright>Copyright (c) 2016 Zach Deibert</copyright>
