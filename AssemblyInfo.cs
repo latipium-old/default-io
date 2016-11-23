@@ -1,4 +1,4 @@
-﻿//
+//
 // AssemblyInfo.cs
 //
 // Author:
@@ -27,10 +27,10 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyTitle("Com.Latipium.Template")]
-[assembly: AssemblyDescription("A template for modules developers to use as a starting point for their modules")]
+[assembly: AssemblyTitle("Com.Latipium.Defaults.IO")]
+[assembly: AssemblyDescription("The default i/o implementation for Latipium")]
 [assembly: AssemblyCompany("Latipium")]
-[assembly: AssemblyProduct("Latipium Template")]
+[assembly: AssemblyProduct("Default Latipium IO Module")]
 [assembly: AssemblyCopyright("Zach Deibert")]
 
 #if DEBUG
