@@ -9,6 +9,11 @@ using Com.Latipium.Core;
 
 namespace Com.Latipium.Defaults.IO {
 	public partial class IOModule {
+        /// <summary>
+        /// See File.ReadAllBytes
+        /// </summary>
+        /// <returns>The all bytes.</returns>
+        /// <param name="path">Path.</param>
 		[LatipiumMethod("ReadAllBytes")]
 		public byte[] ReadAllBytes(string path) {
 			if ( BeforeOperation(path) ) {
@@ -21,6 +26,11 @@ namespace Com.Latipium.Defaults.IO {
 			return null;
 		}
 
+        /// <summary>
+        /// See File.ReadAllLines
+        /// </summary>
+        /// <returns>The all lines.</returns>
+        /// <param name="path">Path.</param>
 		[LatipiumMethod("ReadAllLines")]
 		public string[] ReadAllLines(string path) {
 			if ( BeforeOperation(path) ) {
@@ -33,6 +43,12 @@ namespace Com.Latipium.Defaults.IO {
 			return null;
 		}
 
+        /// <summary>
+        /// See File.ReadAllLines
+        /// </summary>
+        /// <returns>The all lines.</returns>
+        /// <param name="path">Path.</param>
+        /// <param name="encoding">Encoding.</param>
 		[LatipiumMethod("ReadAllLines")]
 		public string[] ReadAllLines(string path, Encoding encoding) {
 			if ( BeforeOperation(path) ) {
@@ -45,6 +61,11 @@ namespace Com.Latipium.Defaults.IO {
 			return null;
 		}
 
+        /// <summary>
+        /// See File.ReadAllText
+        /// </summary>
+        /// <returns>The all text.</returns>
+        /// <param name="path">Path.</param>
 		[LatipiumMethod("ReadAllText")]
 		public string ReadAllText(string path) {
 			if ( BeforeOperation(path) ) {
@@ -57,6 +78,12 @@ namespace Com.Latipium.Defaults.IO {
 			return null;
 		}
 
+        /// <summary>
+        /// See File.ReadAllText
+        /// </summary>
+        /// <returns>The all text.</returns>
+        /// <param name="path">Path.</param>
+        /// <param name="encoding">Encoding.</param>
 		[LatipiumMethod("ReadAllText")]
 		public string ReadAllText(string path, Encoding encoding) {
 			if ( BeforeOperation(path) ) {
