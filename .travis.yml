@@ -7,3 +7,6 @@ script:
 - ./.ci.sh
 env:
   secure: PCJbDzFVZsFB3LVfTj5ssiwHhd1d6XG/J85Ds017sPk/QOtjvNlV5R0ONvfBnHO2W9PzCPMdKjGsojwjVB8anhs9WEvzrQL+bA6dI9biRGb6nYWHTvfxXbYnLHCjuSiTyh/MMstglx9jgDnC7Z2qH97udve84Tl3OGxZBnLKOW3BmEUmgh/Wegh7uz6KHuBAqLuCopQ7z5e2PpeXcLwkGKgZI+Xuo5SAc2L582sm8RwdalYF9kD+rbLjkjom4ipM8JbKMtgbGyhS8ULvl3Cgmtt08MlL5d+jgySt6amXd/HrwOKSOu9dvPIq2vSQlxDeASATmzR/gkddp/PRZH2VXc3oOiin83pjX8/+QwfeXVVLnyGgvFSSUwhlTkRYmU17A1Jp/46Znj6hLGOQTusMMKelufVau2N26YQ+RggGZl3NYv4ZSN9bKGhnDXNZ2W8AVuNbFkHZ/+bUHC99SSEJSWv/5NrIJIUo9Xr/Wjkf+Q+uIpX9IE5MYM/s0PeaIxiUZ5zW7967QZuaS6lB/rWW+9B8nutoQrhmyTDLdgfMSnNu8GVq7TWkJYVg/BwpCXPH32G0Xpl3xsORpXCxT3yeAcc8T0HN3M/HNVQZ/GBEupjlBYeSQYPdN8lv8CX1yyqnBerA15fdGmMiZ8CiX3fyC1hxQiPi8/167IioTSPfODg=
+before_install:
+- openssl aes-256-cbc -K $encrypted_76cfd39a736e_key -iv $encrypted_76cfd39a736e_iv
+  -in key.snk.enc -out key.snk -d
