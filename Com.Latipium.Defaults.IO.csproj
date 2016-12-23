@@ -14,6 +14,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Exe</OutputType>
     <AssemblyName>Com.Latipium.Defaults.IO</AssemblyName>
+    <ReleaseVersion>1.0</ReleaseVersion>
   </PropertyGroup>
   <Import Project="Com.Latipium.Template.xml" />
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
@@ -48,6 +49,7 @@
     <Reference Include="log4net">
       <HintPath>$(SolutionDir)\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />

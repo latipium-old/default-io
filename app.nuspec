@@ -20,6 +20,7 @@
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" />
+      <frameworkAssembly assemblyName="System.Xml" />
     </frameworkAssemblies>
     <tags>Latipium Development Non-Mod</tags>
   </metadata>

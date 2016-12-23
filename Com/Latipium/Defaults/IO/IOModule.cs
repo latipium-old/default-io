@@ -9,6 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
+using System.Xml;
 using Com.Latipium.Core;
 
 namespace Com.Latipium.Defaults.IO {
@@ -78,6 +79,15 @@ namespace Com.Latipium.Defaults.IO {
 #endif
 		}
 
+        private IEnumerable<string> ListMods(params string[] dir) {
+            string path = Path.Combine(dir);
+            if (Directory.Exists(path)) {
+                return Directory.EnumerateFiles(path, "*.dll");
+            } else {
+                return new string[0];
+            }
+        }
+
 		/// <summary>
 		/// Gets the modules that should be loaded.
 		/// </summary>
@@ -85,14 +95,68 @@ namespace Com.Latipium.Defaults.IO {
 		[LatipiumMethod("GetModules")]
 		public IEnumerable<string> GetModules() {
 			new FileIOPermission(PermissionState.Unrestricted).Assert();
-			IEnumerable<string> ret = Directory.GetFiles(Environment.CurrentDirectory, "*.dll")
+            IEnumerable<string> ret;
+            if (File.Exists("packages.config")) {
+                XmlDocument doc = new XmlDocument();
+                doc.Load("packages.config");
+                ret = doc.GetElementsByTagName("package").Cast<XmlElement>().Where(e => !new string[] {
+                    "Com.Latipium.Core",
+                    "Com.Latipium.Defaults.IO",
+                    "Com.Latipium.Security",
+                    "log4net"
+                }.Contains(e.GetAttribute("id"))).SelectMany(e => {
+                    string id = e.GetAttribute("id");
+                    string version = e.GetAttribute("version");
+                    string framework = e.HasAttribute("targetFramework") ? e.GetAttribute("targetFramework") : "net45";
+                    int maxFramework = 45;
+                    if (framework.StartsWith("net") && framework.Length >= 5) {
+                        int.TryParse(framework.Substring(3, 2), out maxFramework);
+                    }
+                    string dir = string.Concat(id, ".", version);
+                    string libdir = Path.Combine(dir, "lib");
+                    if (!Directory.Exists(libdir)) {
+                        return new string[0];
+                    }
+                    IEnumerable<string> res = Directory.EnumerateFiles(libdir, "*.dll");
+                    if (res.Any()) {
+                        return res;
+                    }
+                    res = ListMods(libdir, framework);
+                    if (res.Any()) {
+                        return res;
+                    }
+                    res = ListMods(libdir, string.Concat("net", maxFramework));
+                    if (res.Any()) {
+                        return res;
+                    }
+                    IEnumerable<string> subdirs = Directory.EnumerateDirectories(libdir);
+                    int tmp;
+                    string path = subdirs.Where(
+                        d => d.StartsWith("net") && d.Length >= 5 && int.TryParse(d.Substring(3, 2), out tmp))
+                        .OrderByDescending(o => o)
+                        .SkipWhile(d => int.Parse(d) > maxFramework)
+                        .Where(d => Directory.EnumerateFiles(d, "*.dll").Any())
+                        .FirstOrDefault();
+                    if (path != null) {
+                        return Directory.EnumerateFiles(path, "*.dll");
+                    }
+                    path = subdirs.Where(d => Directory.EnumerateFiles(d, "*.dll").Any()).OrderByDescending(o => o).FirstOrDefault();
+                    if (path == null) {
+                        return new string[0];
+                    } else {
+                        return Directory.EnumerateFiles(path, "*.dll");
+                    }
+                });
+            } else {
+                ret = Directory.GetFiles(Environment.CurrentDirectory, "*.dll")
 				.Where((string name) => !(
-					name.EndsWith("Com.Latipium.Core.dll") ||
-					name.EndsWith("Com.Latipium.Defaults.IO.dll") ||
-					name.EndsWith("Com.Latipium.Security.dll") ||
-					name.EndsWith("log4net.dll")));
-			CodeAccessPermission.RevertAssert();
-			return ret;
+                                 name.EndsWith("Com.Latipium.Core.dll") ||
+                                 name.EndsWith("Com.Latipium.Defaults.IO.dll") ||
+                                 name.EndsWith("Com.Latipium.Security.dll") ||
+                                 name.EndsWith("log4net.dll")));
+            }
+            CodeAccessPermission.RevertAssert();
+            return ret.Select(p => Path.GetFullPath(p));
 		}
 
 		/// <summary>
